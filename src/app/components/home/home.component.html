@@ -1,0 +1,160 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-primary fixed-top">
+  <div class="container-fluid">
+    <form class="form-inline">
+
+      <div class="input-group">
+        <div class="input-group-prepend bg-white">
+          <div class="input-group-text bg-white">
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </div>
+        </div>
+        <input [(ngModel)]="searchText" name="name" class="border-0 form-control mr-sm-2" type="search" placeholder="Search.." aria-label="Search..">
+      </div>
+
+    </form>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+      
+        <li class="nav-item">
+          <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+            aria-expanded="false">
+            <span>
+              <span class="account-user-name text-white">{{user_login_details.name}}</span>
+            </span>
+            <span class="account-user-avatar">
+              &nbsp;
+              <img src="{{user_login_details.img}}" alt="user-image" class="rounded-circle border border-white small-avatar">
+            </span>      
+          </a>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+<!-- Main Content-->
+<div class="container-fluid pt-3">
+  <div class="row" id="main-content">
+
+    <!--Side bar with list of people-->
+    <div class="side-bar col-md-3 ">
+      <ul class="list-group">
+        <li class="list-group-item shadow-lg" *ngFor="let people of peoplesList |searchPeople:searchText" [class.active]="selected_people==people"
+          (click)="showPeopleDetail(people)">
+          <img src="{{people.img}}" class="small-avatar rounded-circle border border-primary" alt=""> {{people.name}}
+          <span class="btn arrow-right">
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+          </span>
+        </li>
+      </ul>
+    </div>
+    <!--./Side bar with list of people-->
+
+    <!--Right bar -->
+    <div class="right-panel col-md-9">
+      <div class="card shadow-lg" *ngIf="show_people_detail">
+        <div class="card-body container">
+          <div class="row">
+            <div class="col-md-4">
+              <div>
+                <img src="{{people_details.img}}" class="shadow img-responsive rounded-circle border border-primary people-img" alt="">
+                <br>
+                <p class="text-center text-primary font-weight-bold">{{people_details.name}}</p>
+              </div>
+            </div>
+            <div class="col-md-4 align-self-center">
+              <button class="btn btn-primary btn-block shadow" data-toggle="modal" data-target="#sendMessageModal">SEND MESSAGE</button>
+              <br>
+              <div class="rating-outer">
+                <div class="rating-inner" [style.width.%]="getRatings(people_details.rating)">
+
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-12 description">
+              <p class="text-secondary">{{people_details.Description}}</p>
+            </div>
+
+            <div class="col-md-6 like-dislike-table">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Like</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let like of people_details.Likes">
+                    <td>
+                      <i class="fa fa-thumbs-up text-primary" aria-hidden="true"></i>&nbsp;{{like}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-md-6 like-dislike-table">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Dislike</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let dislike of people_details.Dislikes">
+                    <td>
+                      <i class="fa fa-thumbs-down text-primary" aria-hidden="true"></i>&nbsp;{{dislike}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <hr>
+
+
+        </div>
+      </div>
+
+      <!--Show when no data selected-->
+      <div id="no-selection-box" class="" *ngIf="!show_people_detail">
+        <h1 class="text-center text-mutes">
+          <i class="fa fa-user text-muted" aria-hidden="true"></i>
+        </h1>
+        <h3 class="text-center">No data found</h3>
+        <p class="text-center text-muted">Please select an user to view detail</p>
+      </div>
+      <!--./Show when no data selected-->
+
+    </div>
+    <!--./Right bar -->
+
+  </div>
+</div>
+<!-- ./Main Content -->
+
+
+<!--Modal pop up to send message-->
+<div class="modal fade" id="sendMessageModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center text-muted" id="exampleModalLabel">Say Hi !</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body align-self-center">
+        <textarea name="msg" id="" cols="50" rows="10"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="sendMessage()">Send</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--./Modal pop up to send message-->

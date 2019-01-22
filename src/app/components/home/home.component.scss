@@ -1,0 +1,60 @@
+
+
+.arrow-right{
+    float: right;
+    
+}
+#main-content{
+    height: 100vh;
+    margin-top: 60px;
+}
+.people-img{
+    display: block;
+    margin: auto;
+}
+#no-selection-box{
+    height: 20rem;
+    background-color: white;
+    border: 3px solid #ccc;
+    border-style: dashed;
+    padding-top: 5rem;
+}
+.rating-outer::before{
+    content: "\f004  \f004  \f004  \f004  \f004";
+    font-family: 'Font Awesome 5 Free';
+    color: #ccc;
+    font-weight: 900;
+    font-size: 2rem;
+}
+
+.rating-inner::before{
+    content: "\f004  \f004  \f004  \f004  \f004";
+    font-family: 'Font Awesome 5 Free';
+    color: red;
+    font-weight: 900;
+    font-size: 2rem;
+    width: 0%;
+}
+
+.rating-outer{
+    position: relative;
+    display: inline-block;
+}
+
+.rating-inner{
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.input-group{
+    border: 0px;
+    .input-group-prepend{
+        border: 0px;
+        border-radius: 3px;
+    }
+    .input-group-text{
+        border: 0px;
+    }
+}
